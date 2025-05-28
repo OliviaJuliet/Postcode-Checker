@@ -9,6 +9,9 @@ class PostcodeApi
             http.request(request)
         }
         json = JSON.parse(response.body, symbolize_names: true)
+        if json[:status] != 200
+            return false
+        end
         lsoa = json[:result][:lsoa]
         lsoa.start_with?("Southwark") || lsoa.start_with?("Lambeth") # I am surprised and slightly appalled that this works without a 'return', but who am I to argue with RuboCop?
     end
