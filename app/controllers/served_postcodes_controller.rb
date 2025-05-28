@@ -5,6 +5,6 @@ class ServedPostcodesController < ApplicationController
 
     def check
         @sanitized_postcode = params[:query].delete(" ").upcase
-        @served = ServedPostcode.exists?(postcode: @sanitized_postcode) || PostcodeApi.check(@sanitized_postcode)
+        @served = ServedPostcode.exists?(postcode: @sanitized_postcode) || Lsoa.check(@sanitized_postcode)
     end
 end

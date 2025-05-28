@@ -1,7 +1,7 @@
 require "net/http"
 require "uri"
 
-class PostcodeApi
+class Lsoa < ApplicationRecord
     def self.check(postcode)
         url = URI.parse("http://postcodes.io/postcodes/" + postcode)
         request = Net::HTTP::Get.new(url.to_s)
@@ -12,7 +12,7 @@ class PostcodeApi
         if json[:status] != 200
             return false
         end
-        lsoa = json[:result][:lsoa]
-        lsoa.start_with?("Southwark") || lsoa.start_with?("Lambeth") # I am surprised and slightly appalled that this works without a 'return', but who am I to argue with RuboCop?
+        lsoa_prefix = json[:result][:lsoa].rpartition(" ").first
+        Lsoa.exists?(name: lsoa_prefix) # I am surprised and slightly appalled that this works without a 'return', but who am I to argue with RuboCop?
     end
 end
