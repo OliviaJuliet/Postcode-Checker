@@ -1,0 +1,9 @@
+<h1>Postcode Checker</h1>
+
+<p>Enter your postcode below to check if it's in our service area.</p>
+
+<%= form_with url: "/check", method: :get do |form| %>
+    <%= form.label :query, "Your postcode:" %>
+    <%= form.search_field :query %>
+    <%= form.submit "Check" %>
+<% end %>
